@@ -1,13 +1,12 @@
 import odas
 import numpy as np
 
-# Audio signal with noise
+'''
+Given a noise signal x, noise_reduce(x, freq) returns:
+The denoised noise using a fourier transform.
+y is a noise signal as a numpy array.
+'''
 
-def noise_reduce(x):
-	# Set the sampling frequency (in Hz)
-	fs = 44100
-
-	# Perform noise reduction using the FFT algorithm
-	y = odas.odas_denoise(x, fs)
-
+def noise_reduce(signal, freq=44100):
+	y = odas.odas_denoise(signal, freq)
 	return y
