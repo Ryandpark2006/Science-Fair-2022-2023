@@ -16,12 +16,12 @@ def closest_distance(signals, freq=44100, d=0.035):
 	return min(dist)
 
 '''
-Given a list of noise signals x, direction_of_arrival(x) returns:
+Given a list of noise signals x, direction_of_arrival(signals, freq, d) returns:
 The direction of arrival of the noise signal as an angle
 '''
 
-def direction_of_arrival(x, freq=44100, d=0.035):
-	z = odas.gcc(x, freq)
+def direction_of_arrival(signals, freq=44100, d=0.035):
+	z = odas.gcc(signals, freq)
 	dist = [(z[i] * freq * 0.5 * d) for i in range(4)]
 	angle = math.atan2(dist[2] - dist[0], dist[1] - dist[3]) * 180 / math.pi
 	return angle
