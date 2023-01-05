@@ -1,11 +1,28 @@
-from scipy.io import wavfile
+import numpy as np
 import noisereduce as nr
-import os
+import scipy.io.wavfile as wf
+import matplotlib.pyplot as plt
+import librosa
+import librosa.display
 
-files = os.listdir('/kaggle/input/environmental-sound-classification-50/audio/audio/')
+fs, audio_data = wf.read('/content/original.wav')
+audio_data = np.array(audio_data)
 
-for i in range(len(files)):
-    rate, data = wavfile.read('/kaggle/input/environmental-sound-classification-50/audio/audio/' + files[i])
-    # perform noise reduction
-    reduced_noise = nr.reduce_noise(y=data, sr=rate)
-    wavfile.write(str(i) + '.wav', rate, reduced_noise)
+def denoise(audio_data, fs):
+	denoised_data = nr.reduce_noise(audio_data, fs)
+	return denoised_data
+
+def plot_wave(file, title):
+  y, sr = librosa.load(file)
+  plt.figure()
+  librosa.display.waveplot(y, sr=sr)
+  plt.title(title)
+  plt.show()
+
+plot_wave('/content/original.wav', 'Original Sound')
+
+denoised_data = denoise(audio_data, fs)
+
+wf.write('/content/output.wav', fs, denoised_data)
+
+plot_wave('/content/output.wav', 'Denoised Sound (Fast Fourier Transform)')
