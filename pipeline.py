@@ -72,7 +72,7 @@ def sound_separation(audio_data, freq=44100):
 # model
 
 def predict(filename): # y, s = librosa.load('test.wav', sr=16000 ) 
-    y, sr = librosa.load(filename, sr = 16000 )
+    y, sr = librosa.load(filename, sr = 16000)
     sampling_rate = sr
 
     sampling_rate = dataset.features["audio"].sampling_rate
